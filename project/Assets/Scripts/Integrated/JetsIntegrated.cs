@@ -45,6 +45,8 @@ public class JetsIntegrated : MonoBehaviour
 
     AudioClip clip;
 
+    public event Action OnBotAudioStarted;
+
     void Start()
     {
         LoadModel();
@@ -189,6 +191,7 @@ public class JetsIntegrated : MonoBehaviour
         {
             audioSource.clip = clip;
             audioSource.Play();
+            OnBotAudioStarted?.Invoke();
         }
         else
         {
