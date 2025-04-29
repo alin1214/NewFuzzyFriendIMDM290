@@ -8,9 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public Camera playerCamera;
     public float walkSpeed = 2f;
     public float runSpeed = 4f;
-    public float jumpPower = .5f;
+    public float jumpPower = .01f;
     public float gravity = 10f;
-    public float lookSpeed = 2f;
+    public float lookSpeed = .5f;
     public float lookXLimit = 45f;
     public float defaultHeight = 2f;
     public float crouchHeight = 1f;
@@ -64,8 +64,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             characterController.height = defaultHeight;
-            walkSpeed = 6f;
-            runSpeed = 12f;
+            walkSpeed = 4f;
+            runSpeed = 8f;
         }
 
         characterController.Move(moveDirection * Time.deltaTime);
