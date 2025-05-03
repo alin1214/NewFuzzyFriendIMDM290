@@ -1,5 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class canvasmanager : MonoBehaviour
 {
@@ -9,75 +11,69 @@ public class canvasmanager : MonoBehaviour
     public GameObject showTutorialP;
     public GameObject Home;
 
+    public float fade = 0.5f;
 
-    public Input playername;
-    public Input playerPet;
-
+    GameObject currentPage;
 
     void Start()
     {
-        //ShowOpeningP(); // Or whichever should be the starting screen
-
-        openingPage.SetActive(true);
-        namingPage.SetActive(false);
-        Show_CustomizeP.SetActive(false);
-        showTutorialP.SetActive(false);
-        Home.SetActive(false);
+        currentPage = openingPage;
+        SetPageInstant(openingPage);
         Debug.Log("we are in opening page ");
     }
 
-    //public void ShowOpeningP()
-    //{
-    //    openingPage.SetActive(true);
-    //    namingPage.SetActive(false);
-    //    Show_CustomizeP.SetActive(false);
-    //    Debug.Log("we are in opening page ");
-    //}
-
-    public void ShowNamingP()
-    {
-        openingPage.SetActive(false);
-        namingPage.SetActive(true);
-        Show_CustomizeP.SetActive(false);
-        showTutorialP.SetActive(false);
-        Home.SetActive(false);
-        Debug.Log("we are in naming page ");
-    }
-
-
-
-    public void showTutorial()
+    void SetPageInstant(GameObject page)
     {
         openingPage.SetActive(false);
         namingPage.SetActive(false);
         Show_CustomizeP.SetActive(false);
-    showTutorialP.SetActive(true);
-        Home.SetActive(false);
-        Debug.Log("we are in tutorial ");
-    }
-
-    public void ShowCustomize()
-    {
-        openingPage.SetActive(false);
-        namingPage.SetActive(false);
         showTutorialP.SetActive(false);
-        Show_CustomizeP.SetActive(true);
         Home.SetActive(false);
-        Debug.Log("we are in custom ");
+
+        page.SetActive(true);
+        SetCanvasGroupAlpha(page, 1f);
     }
 
-    public void ShowHP()
+    public void ShowNamingP() => StartCoroutine(TransitionTo(namingPage));
+    public void ShowCustomize() => StartCoroutine(TransitionTo(Show_CustomizeP));
+    public void showTutorial() => StartCoroutine(TransitionTo(showTutorialP));
+    public void ShowHP() => StartCoroutine(TransitionTo(Home));
+
+    IEnumerator TransitionTo(GameObject nextPage)
     {
-        openingPage.SetActive(false);
-        namingPage.SetActive(false);
-        showTutorialP.SetActive(false);
-        Show_CustomizeP.SetActive(false);
-        Home.SetActive(true);
+        if (currentPage == nextPage) yield break;
 
-        Debug.Log("we are in home ");
+        CanvasGroup currentGroup = currentPage.GetComponent<CanvasGroup>();
+        CanvasGroup nextG = nextPage.GetComponent<CanvasGroup>();
 
+        nextPage.SetActive(true);
+        nextG.alpha = 0f;
+
+        float t = 0f;
+        while (t < fade)
+        {
+            t += Time.deltaTime;
+            float norm = t / fade;
+            currentGroup.alpha = 1f - norm;
+            nextG.alpha = norm;
+            yield return null;
+        }
+
+        currentGroup.alpha = 0f;
+        currentPage.SetActive(false);
+        nextG.alpha = 1f;
+
+        currentPage = nextPage;
     }
 
+    void SetCanvasGroupAlpha(GameObject obj, float alpha)
+    {
+        var cg = obj.GetComponent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.alpha = alpha;
+        }
+    }
 
 
 }
