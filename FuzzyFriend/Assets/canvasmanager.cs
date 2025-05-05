@@ -1,10 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
-<<<<<<< Updated upstream
 using UnityEngine.UI;
 using System.Collections;
-=======
->>>>>>> Stashed changes
 
 public class canvasmanager : MonoBehaviour
 {
@@ -14,7 +11,6 @@ public class canvasmanager : MonoBehaviour
     public GameObject showTutorialP;
     public GameObject Home;
 
-<<<<<<< Updated upstream
     public float fade = 0.5f;
 
     GameObject currentPage;
@@ -29,23 +25,10 @@ public class canvasmanager : MonoBehaviour
     void SetPageInstant(GameObject page)
     {
         openingPage.SetActive(false);
-=======
-
-    public Input playername;
-    public Input playerPet;
-
-
-    void Start()
-    {
-        //ShowOpeningP(); // Or whichever should be the starting screen
-
-        openingPage.SetActive(true);
->>>>>>> Stashed changes
         namingPage.SetActive(false);
         Show_CustomizeP.SetActive(false);
         showTutorialP.SetActive(false);
         Home.SetActive(false);
-<<<<<<< Updated upstream
 
         page.SetActive(true);
         SetCanvasGroupAlpha(page, 1f);
@@ -92,63 +75,5 @@ public class canvasmanager : MonoBehaviour
         }
     }
 
-=======
-        Debug.Log("we are in opening page ");
-    }
-
-    //public void ShowOpeningP()
-    //{
-    //    openingPage.SetActive(true);
-    //    namingPage.SetActive(false);
-    //    Show_CustomizeP.SetActive(false);
-    //    Debug.Log("we are in opening page ");
-    //}
-
-    public void ShowNamingP()
-    {
-        openingPage.SetActive(false);
-        namingPage.SetActive(true);
-        Show_CustomizeP.SetActive(false);
-        showTutorialP.SetActive(false);
-        Home.SetActive(false);
-        Debug.Log("we are in naming page ");
-    }
-
-
-
-    public void showTutorial()
-    {
-        openingPage.SetActive(false);
-        namingPage.SetActive(false);
-        Show_CustomizeP.SetActive(false);
-    showTutorialP.SetActive(true);
-        Home.SetActive(false);
-        Debug.Log("we are in tutorial ");
-    }
-
-    public void ShowCustomize()
-    {
-        openingPage.SetActive(false);
-        namingPage.SetActive(false);
-        showTutorialP.SetActive(false);
-        Show_CustomizeP.SetActive(true);
-        Home.SetActive(false);
-        Debug.Log("we are in custom ");
-    }
-
-    public void ShowHP()
-    {
-        openingPage.SetActive(false);
-        namingPage.SetActive(false);
-        showTutorialP.SetActive(false);
-        Show_CustomizeP.SetActive(false);
-        Home.SetActive(true);
-
-        Debug.Log("we are in home ");
-
-    }
-
-
->>>>>>> Stashed changes
 
 }
