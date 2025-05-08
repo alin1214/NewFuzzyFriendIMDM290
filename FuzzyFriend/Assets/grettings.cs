@@ -1,6 +1,8 @@
+
 using UnityEngine;
 using TMPro;
 using System.Collections;
+
 
 public class greetings : MonoBehaviour
 {
@@ -15,21 +17,24 @@ public class greetings : MonoBehaviour
         string playerName = nameInputField.text;
         string petName = petInput.text;
 
-        if (!string.IsNullOrEmpty(playerName) && !string.IsNullOrEmpty(petName))
-        {
-            string fullMessage = $"Hello {playerName} and welcome to Fuzzy Fun!\n\n" +
-                $"We are so glad you are playing. This game helps you grow and care for your little fuzzy friend, {petName}. " +
-                $"In order to be Pet Certified, you need to get Pet Points by playing our mini games at the Pet Park " +
-                $"or by talking to your Pet with nice words.\n\n" +
-                $"Please check on your pet stats to see how they are doing unless you will put your Pet, {petName}, in terrible danger.";
+        if (!string.IsNullOrEmpty(playerName))
+            if (!string.IsNullOrEmpty(playerName) && !string.IsNullOrEmpty(petName))
+            {
+                greetingText.text = "Hello, " + playerName + "!";
+                string fullMessage = $"Hello {playerName} and welcome to Fuzzy Fun!\n\n" +
+                    $"We are so glad you are playing. This game helps you grow and care for your little fuzzy friend, {petName}. " +
+                    $"In order to be Pet Certified, you need to get Pet Points by playing our mini games at the Pet Park " +
+                    $"or by talking to your Pet with nice words.\n\n" +
+                    $"Please check on your pets energy and to replenish their energy click P! If not you will put your Pet, {petName}, in terrible danger.";
 
-            StopAllCoroutines(); // Stop previous coroutines if any
-            StartCoroutine(TypeText(fullMessage));
-        }
-        else
-        {
-            greetingText.text = "Please enter you and your pet's name.";
-        }
+                StopAllCoroutines(); // Stop previous coroutines if any
+                StartCoroutine(TypeText(fullMessage));
+            }
+            else
+            {
+                greetingText.text = "Please enter your name.";
+                greetingText.text = "Please enter you and your pet's name.";
+            }
     }
 
     IEnumerator TypeText(string message)
@@ -40,6 +45,6 @@ public class greetings : MonoBehaviour
             greetingText.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
-    
-}
+
+    }
 }

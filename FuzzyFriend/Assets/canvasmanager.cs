@@ -1,17 +1,25 @@
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using UnityEngine;
+using Unity.VisualScripting;
+
+using UnityEngine.UI;
+
 
 public class canvasmanager : MonoBehaviour
 {
+   
+
+
     public GameObject openingPage;
     public GameObject namingPage;
     public GameObject Show_CustomizeP;
     public GameObject showTutorialP;
     public GameObject Home;
+    public GameObject MiniGame1;
+    public GameObject GoodEnding;
+    public GameObject BadEnding;
 
-    public float fade = 0.5f;
+    public float fadeDuration = 0.5f;
 
     GameObject currentPage;
 
@@ -29,39 +37,47 @@ public class canvasmanager : MonoBehaviour
         Show_CustomizeP.SetActive(false);
         showTutorialP.SetActive(false);
         Home.SetActive(false);
+        MiniGame1.SetActive(false);
+        GoodEnding.SetActive(false);
+
+BadEnding.SetActive(false);
 
         page.SetActive(true);
         SetCanvasGroupAlpha(page, 1f);
     }
-
+    public void ShowStart() => StartCoroutine(TransitionTo(openingPage));
     public void ShowNamingP() => StartCoroutine(TransitionTo(namingPage));
     public void ShowCustomize() => StartCoroutine(TransitionTo(Show_CustomizeP));
     public void showTutorial() => StartCoroutine(TransitionTo(showTutorialP));
     public void ShowHP() => StartCoroutine(TransitionTo(Home));
+    public void ShowMiniGame ()=> StartCoroutine(TransitionTo(MiniGame1));
+
+    public void ShowGoodEnding() => StartCoroutine(TransitionTo(GoodEnding));
+    public void ShowBadEnding() => StartCoroutine(TransitionTo(BadEnding));
 
     IEnumerator TransitionTo(GameObject nextPage)
     {
         if (currentPage == nextPage) yield break;
 
         CanvasGroup currentGroup = currentPage.GetComponent<CanvasGroup>();
-        CanvasGroup nextG = nextPage.GetComponent<CanvasGroup>();
+        CanvasGroup nextGroup = nextPage.GetComponent<CanvasGroup>();
 
         nextPage.SetActive(true);
-        nextG.alpha = 0f;
+        nextGroup.alpha = 0f;
 
         float t = 0f;
-        while (t < fade)
+        while (t < fadeDuration)
         {
             t += Time.deltaTime;
-            float norm = t / fade;
-            currentGroup.alpha = 1f - norm;
-            nextG.alpha = norm;
+            float normalized = t / fadeDuration;
+            currentGroup.alpha = 1f - normalized;
+            nextGroup.alpha = normalized;
             yield return null;
         }
 
         currentGroup.alpha = 0f;
         currentPage.SetActive(false);
-        nextG.alpha = 1f;
+        nextGroup.alpha = 1f;
 
         currentPage = nextPage;
     }
@@ -74,6 +90,5 @@ public class canvasmanager : MonoBehaviour
             cg.alpha = alpha;
         }
     }
-
-
 }
+
